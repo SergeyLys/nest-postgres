@@ -7,9 +7,10 @@ import {
 } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
-import { CreateUserDto, MinimalUserCredentialsDto } from '../users/dto/create-user.dto';
+import { CreateUserDto } from '../users/dto/create-user.dto';
 import * as bcrypt from 'bcryptjs';
 import { UsersModel } from '../users/users.model';
+import {LoginUserDto} from "../users/dto/login-user.dto";
 
 @Injectable()
 export class AuthService {
@@ -18,8 +19,8 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async login(userCredentials: MinimalUserCredentialsDto) {
-    const user = await this.validateUser(userCredentials);
+  async login(loginUserDto: LoginUserDto) {
+    const user = await this.validateUser(loginUserDto);
     return this.generateToken(user);
   }
 
@@ -48,8 +49,8 @@ export class AuthService {
     };
   }
 
-  private async validateUser(userCredentials: MinimalUserCredentialsDto) {
-    const candidate = await this.userService.findByEmail(userCredentials.email);
+  private async validateUser(loginUserDto: LoginUserDto) {
+    const candidate = await this.userService.findByEmail(loginUserDto.email);
 
     if (!candidate) {
       throw new NotFoundException({
@@ -58,7 +59,7 @@ export class AuthService {
     }
 
     const passwordEquals = await bcrypt.compare(
-      userCredentials.password,
+      loginUserDto.password,
       candidate.password,
     );
 
