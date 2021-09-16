@@ -3,10 +3,11 @@ import {
   HttpStatus,
   Injectable,
   UnauthorizedException,
+  NotFoundException,
 } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
-import { CreateUserDto } from '../users/dto/create-user.dto';
+import { CreateUserDto, MinimalUserCredentialsDto } from '../users/dto/create-user.dto';
 import * as bcrypt from 'bcryptjs';
 import { UsersModel } from '../users/users.model';
 
@@ -17,8 +18,8 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async login(userDto: CreateUserDto) {
-    const user = await this.validateUser(userDto);
+  async login(userCredentials: MinimalUserCredentialsDto) {
+    const user = await this.validateUser(userCredentials);
     return this.generateToken(user);
   }
 
@@ -47,10 +48,17 @@ export class AuthService {
     };
   }
 
-  private async validateUser(userDto: CreateUserDto) {
-    const candidate = await this.userService.findByEmail(userDto.email);
+  private async validateUser(userCredentials: MinimalUserCredentialsDto) {
+    const candidate = await this.userService.findByEmail(userCredentials.email);
+
+    if (!candidate) {
+      throw new NotFoundException({
+        message: "User with this email doesn't exist",
+      });
+    }
+
     const passwordEquals = await bcrypt.compare(
-      userDto.password,
+      userCredentials.password,
       candidate.password,
     );
 

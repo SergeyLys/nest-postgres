@@ -17,7 +17,7 @@ import { AuthModule } from './auth/auth.module';
       dialect: 'postgres',
       port: Number(process.env.POSTGRES_PORT),
       host: process.env.POSTGRES_HOST,
-      username: process.env.POSTGRES_USERNAME,
+      username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
       models: [UsersModel, RolesModel, UserRolesModel],
