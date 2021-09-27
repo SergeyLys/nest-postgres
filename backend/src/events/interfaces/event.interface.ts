@@ -1,12 +1,7 @@
-export enum EventTypes {
-  GYM_EXERCISE,
-}
+import { ExerciseInterface } from '../../exercise/interfaces/exercise.interface';
 
 export interface EventInterface {
-  title: string;
-  type: EventTypes;
-  duration?: number;
-  repeatable?: boolean;
-  dates: Date[];
-  owner: number;
+  day: string;
+  exercises?: ExerciseInterface[];
+  owner?: number;
 }

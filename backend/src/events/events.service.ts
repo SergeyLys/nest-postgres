@@ -10,7 +10,9 @@ export class EventsService {
     private eventsRepository: typeof EventsModel,
   ) {}
 
-  createEvent(createEventDto: CreateEventDto) {
+  async createEvent(createEventDto: CreateEventDto) {
+    // const role = await this.roleService.getRoleByValue('USER');
+    // await user.$set('roles', [role.id]);
     return this.eventsRepository.create(createEventDto);
   }
 
