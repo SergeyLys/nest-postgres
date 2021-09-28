@@ -29,7 +29,9 @@ export class EventsModel extends Model<EventsModel, EventInterface> {
 
   @ForeignKey(() => UsersModel)
   userId: number;
+  @BelongsTo(() => UsersModel)
+  user: UsersModel;
 
-  @BelongsTo(() => UsersModel, '')
-  owner: UsersModel;
+  @HasMany(() => ExerciseModel)
+  exercises: ExerciseModel[];
 }

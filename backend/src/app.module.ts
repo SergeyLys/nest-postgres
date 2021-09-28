@@ -10,6 +10,7 @@ import { AuthModule } from './auth/auth.module';
 import { EventsModule } from './events/events.module';
 import { EventsModel } from './events/events.model';
 import { ExerciseModule } from './exercise/exercise.module';
+import { ExerciseModel } from './exercise/exercise.model';
 
 @Module({
   imports: [
@@ -23,7 +24,13 @@ import { ExerciseModule } from './exercise/exercise.module';
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-      models: [UsersModel, RolesModel, UserRolesModel, EventsModel],
+      models: [
+        UsersModel,
+        RolesModel,
+        UserRolesModel,
+        EventsModel,
+        ExerciseModel,
+      ],
       autoLoadModels: true,
     }),
     UsersModule,

@@ -2,6 +2,7 @@ import {
   BelongsToMany,
   Column,
   DataType,
+  HasMany,
   Model,
   Table,
 } from 'sequelize-typescript';
@@ -9,6 +10,8 @@ import { UserInterface } from './interfaces/user.interface';
 import { ApiProperty } from '@nestjs/swagger';
 import { RolesModel } from '../roles/roles.model';
 import { UserRolesModel } from '../roles/user-roles.model';
+import { ExerciseModel } from '../exercise/exercise.model';
+import { EventsModel } from '../events/events.model';
 
 @Table({ tableName: 'users' })
 export class UsersModel extends Model<UsersModel, UserInterface> {
@@ -43,4 +46,10 @@ export class UsersModel extends Model<UsersModel, UserInterface> {
 
   @BelongsToMany(() => RolesModel, () => UserRolesModel)
   roles: RolesModel[];
+
+  @HasMany(() => EventsModel)
+  events: EventsModel[];
+
+  @HasMany(() => ExerciseModel)
+  exercises: ExerciseModel[];
 }

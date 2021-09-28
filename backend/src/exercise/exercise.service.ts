@@ -1,15 +1,21 @@
 import { Injectable } from '@nestjs/common';
 import { CreateExerciseDto } from './dto/create-exercise.dto';
 import { UpdateExerciseDto } from './dto/update-exercise.dto';
+import { InjectModel } from '@nestjs/sequelize';
+import { ExerciseModel } from './exercise.model';
 
 @Injectable()
 export class ExerciseService {
+  constructor(
+    @InjectModel(ExerciseModel)
+    private exerciseRepository: typeof ExerciseModel,
+  ) {}
   create(createExerciseDto: CreateExerciseDto) {
-    return 'This action adds a new exercise';
+    return this.exerciseRepository.create(createExerciseDto);
   }
 
   findAll() {
-    return `This action returns all exercise`;
+    return this.exerciseRepository.findAll();
   }
 
   findOne(id: number) {

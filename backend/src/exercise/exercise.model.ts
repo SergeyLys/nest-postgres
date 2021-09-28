@@ -34,7 +34,7 @@ export class ExerciseModel extends Model<ExerciseModel, ExerciseInterface> {
   sets: { [key: string]: number }[];
 
   @BelongsTo(() => UsersModel)
-  owner: UsersModel;
+  user: UsersModel;
 
   @ForeignKey(() => UsersModel)
   userId: number;

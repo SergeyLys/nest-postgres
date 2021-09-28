@@ -1,7 +1,8 @@
-import { ExerciseInterface } from '../../exercise/interfaces/exercise.interface';
+import { UsersModel } from '../../users/users.model';
+import { ExerciseModel } from '../../exercise/exercise.model';
 
 export interface EventInterface {
   day: string;
-  exercises?: ExerciseInterface[];
-  owner?: number;
+  exercises?: ExerciseModel[];
+  user?: UsersModel;
 }

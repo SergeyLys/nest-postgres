@@ -4,6 +4,7 @@ import { CreateEventDto } from './dto/create-event.dto';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { EventsModel } from './events.model';
+import { User } from '../users/user.decorator';
 
 @ApiTags('Events')
 @Controller('events')
@@ -14,8 +15,8 @@ export class EventsController {
   @ApiOperation({ summary: 'Create event' })
   @ApiResponse({ status: 200, type: EventsModel })
   @Post()
-  create(createEventDto: CreateEventDto) {
-    return this.eventsService.createEvent(createEventDto);
+  create(@User('id') userId, createEventDto: CreateEventDto) {
+    return this.eventsService.createEvent(createEventDto, userId);
   }
 
   @ApiOperation({ summary: 'Get events for user' })
