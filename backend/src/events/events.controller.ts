@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { EventsService } from './events.service';
 import { CreateEventDto } from './dto/create-event.dto';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -15,14 +15,21 @@ export class EventsController {
   @ApiOperation({ summary: 'Create event' })
   @ApiResponse({ status: 200, type: EventsModel })
   @Post()
-  create(@User('id') userId, createEventDto: CreateEventDto) {
+  create(@Body() createEventDto: CreateEventDto, @User('id') userId) {
     return this.eventsService.createEvent(createEventDto, userId);
+  }
+
+  @ApiOperation({ summary: 'Get event by day' })
+  @ApiResponse({ status: 200, type: EventsModel })
+  @Get(':day')
+  getEventByDay(@User('id') userId: number, @Param('day') day: string) {
+    return this.eventsService.getEventByDay(day, userId);
   }
 
   @ApiOperation({ summary: 'Get events for user' })
   @ApiResponse({ status: 200, type: [EventsModel] })
-  @Get(':userId')
-  getEventsByOwner(@Param('userId') ownerId: number) {
+  @Get()
+  getAllUsersEvents(@User('id') ownerId: number) {
     return this.eventsService.getEventsByOwner(ownerId);
   }
 }

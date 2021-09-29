@@ -10,21 +10,26 @@ export class EventsService {
     @InjectModel(EventsModel)
     private eventsRepository: typeof EventsModel,
     @InjectModel(UsersModel)
-    private usersReposotory: typeof UsersModel,
+    private usersRepository: typeof UsersModel,
   ) {}
 
-  async createEvent(createEventDto: CreateEventDto, userId: string) {
-    // const role = await this.roleService.getRoleByValue('USER');
-    // await user.$set('roles', [role.id]);
-    const user = await this.usersReposotory.findOne({ where: { id: userId } });
+  async createEvent(createEventDto: CreateEventDto, userId: number) {
     const event = await this.eventsRepository.create({
       ...createEventDto,
-      user,
+      userId,
     });
     return event;
   }
 
+  getEventByDay(day: string, userId: number) {
+    return this.eventsRepository.findOrCreate({
+      where: { day, userId },
+    });
+  }
+
   getEventsByOwner(ownerId: number) {
-    return this.eventsRepository.findAll({ where: { user: ownerId } });
+    return this.eventsRepository.findAll({
+      where: { userId: ownerId },
+    });
   }
 }

@@ -37,11 +37,13 @@ export class ExerciseModel extends Model<ExerciseModel, ExerciseInterface> {
   user: UsersModel;
 
   @ForeignKey(() => UsersModel)
+  @Column({ type: DataType.INTEGER, allowNull: false })
   userId: number;
 
   @BelongsTo(() => EventsModel)
   event: EventsModel;
 
   @ForeignKey(() => EventsModel)
+  @Column({ type: DataType.INTEGER, allowNull: false })
   eventId: number;
 }

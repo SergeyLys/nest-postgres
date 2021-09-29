@@ -10,8 +10,11 @@ export class ExerciseService {
     @InjectModel(ExerciseModel)
     private exerciseRepository: typeof ExerciseModel,
   ) {}
-  create(createExerciseDto: CreateExerciseDto) {
-    return this.exerciseRepository.create(createExerciseDto);
+  create(createExerciseDto: CreateExerciseDto, userId: number) {
+    return this.exerciseRepository.create({
+      ...createExerciseDto,
+      userId,
+    });
   }
 
   findAll() {

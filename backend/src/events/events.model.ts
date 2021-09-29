@@ -28,6 +28,7 @@ export class EventsModel extends Model<EventsModel, EventInterface> {
   day: string;
 
   @ForeignKey(() => UsersModel)
+  @Column({ type: DataType.INTEGER, allowNull: false })
   userId: number;
   @BelongsTo(() => UsersModel)
   user: UsersModel;

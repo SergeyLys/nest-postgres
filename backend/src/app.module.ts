@@ -32,6 +32,10 @@ import { ExerciseModel } from './exercise/exercise.model';
         ExerciseModel,
       ],
       autoLoadModels: true,
+      synchronize: true,
+      sync: {
+        // force: true,
+      },
     }),
     UsersModule,
     RolesModule,
