@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/sequelize';
 import { EventsModel } from './events.model';
 import { CreateEventDto } from './dto/create-event.dto';
 import { UsersModel } from '../users/users.model';
+import { ExerciseModel } from '../exercise/exercise.model';
 
 @Injectable()
 export class EventsService {
@@ -24,12 +25,14 @@ export class EventsService {
   getEventByDay(day: string, userId: number) {
     return this.eventsRepository.findOrCreate({
       where: { day, userId },
+      include: [ExerciseModel],
     });
   }
 
   getEventsByOwner(ownerId: number) {
     return this.eventsRepository.findAll({
       where: { userId: ownerId },
+      include: [ExerciseModel],
     });
   }
 }
