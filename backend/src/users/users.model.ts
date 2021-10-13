@@ -8,8 +8,6 @@ import {
 } from 'sequelize-typescript';
 import { UserInterface } from './interfaces/user.interface';
 import { ApiProperty } from '@nestjs/swagger';
-import { RolesModel } from '../roles/roles.model';
-import { UserRolesModel } from '../roles/user-roles.model';
 import { ExerciseModel } from '../exercise/exercise.model';
 import { EventsModel } from '../events/events.model';
 
@@ -35,17 +33,6 @@ export class UsersModel extends Model<UsersModel, UserInterface> {
   @ApiProperty({ example: 'Name', description: 'Users name' })
   @Column({ type: DataType.STRING, allowNull: true })
   name: string;
-
-  @ApiProperty({ example: false, description: 'Is user banned' })
-  @Column({ type: DataType.BOOLEAN, defaultValue: false })
-  banned: boolean;
-
-  @ApiProperty({ example: 'Spam', description: 'Description of users ban' })
-  @Column({ type: DataType.STRING, allowNull: true })
-  banReason: string;
-
-  @BelongsToMany(() => RolesModel, () => UserRolesModel)
-  roles: RolesModel[];
 
   @HasMany(() => EventsModel)
   events: EventsModel[];

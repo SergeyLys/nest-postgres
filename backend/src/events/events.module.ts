@@ -13,5 +13,6 @@ import { UsersModel } from '../users/users.model';
     forwardRef(() => AuthModule),
     SequelizeModule.forFeature([EventsModel, UsersModel]),
   ],
+  exports: [EventsService],
 })
 export class EventsModule {}

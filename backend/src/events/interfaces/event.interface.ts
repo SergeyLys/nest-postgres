@@ -4,4 +4,5 @@ export interface EventInterface {
   day: string;
   exercises?: ExerciseModel[];
   userId?: number;
+  scheduleId?: number;
 }

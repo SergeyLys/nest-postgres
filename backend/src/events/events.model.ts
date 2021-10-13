@@ -11,6 +11,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { EventInterface } from './interfaces/event.interface';
 import { ExerciseModel } from '../exercise/exercise.model';
 import { UsersModel } from '../users/users.model';
+import { ScheduleModel } from '../schedule/schedule.model';
 
 @Table({ tableName: 'events' })
 export class EventsModel extends Model<EventsModel, EventInterface> {
@@ -32,6 +33,12 @@ export class EventsModel extends Model<EventsModel, EventInterface> {
   userId: number;
   @BelongsTo(() => UsersModel)
   user: UsersModel;
+
+  @ForeignKey(() => ScheduleModel)
+  @Column({ type: DataType.INTEGER, allowNull: true })
+  scheduleId: number;
+  @BelongsTo(() => ScheduleModel)
+  schedule: ScheduleModel;
 
   @HasMany(() => ExerciseModel)
   exercises: ExerciseModel[];

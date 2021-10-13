@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { EventsModel } from './events.model';
 import { CreateEventDto } from './dto/create-event.dto';
-import { UsersModel } from '../users/users.model';
 import { ExerciseModel } from '../exercise/exercise.model';
 
 @Injectable()
@@ -10,8 +9,6 @@ export class EventsService {
   constructor(
     @InjectModel(EventsModel)
     private eventsRepository: typeof EventsModel,
-    @InjectModel(UsersModel)
-    private usersRepository: typeof UsersModel,
   ) {}
 
   async createEvent(createEventDto: CreateEventDto, userId: number) {

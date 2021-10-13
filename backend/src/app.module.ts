@@ -3,14 +3,13 @@ import { UsersModule } from './users/users.module';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { ConfigModule } from '@nestjs/config';
 import { UsersModel } from './users/users.model';
-import { RolesModule } from './roles/roles.module';
-import { RolesModel } from './roles/roles.model';
-import { UserRolesModel } from './roles/user-roles.model';
 import { AuthModule } from './auth/auth.module';
 import { EventsModule } from './events/events.module';
 import { EventsModel } from './events/events.model';
 import { ExerciseModule } from './exercise/exercise.module';
 import { ExerciseModel } from './exercise/exercise.model';
+import { ScheduleModule } from './schedule/schedule.module';
+import { ScheduleModel } from './schedule/schedule.model';
 
 @Module({
   imports: [
@@ -24,13 +23,7 @@ import { ExerciseModel } from './exercise/exercise.model';
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-      models: [
-        UsersModel,
-        RolesModel,
-        UserRolesModel,
-        EventsModel,
-        ExerciseModel,
-      ],
+      models: [UsersModel, EventsModel, ExerciseModel, ScheduleModel],
       autoLoadModels: true,
       synchronize: true,
       sync: {
@@ -38,10 +31,10 @@ import { ExerciseModel } from './exercise/exercise.model';
       },
     }),
     UsersModule,
-    RolesModule,
     AuthModule,
     EventsModule,
     ExerciseModule,
+    ScheduleModule,
   ],
 })
 export class AppModule {}
