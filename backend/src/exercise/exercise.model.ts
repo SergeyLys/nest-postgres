@@ -27,16 +27,13 @@ export class ExerciseModel extends Model<ExerciseModel, ExerciseInterface> {
   name: string;
 
   @ApiProperty({
-    example: [{ w: 60, r: 10 }],
+    example: { [new Date().setHours(0, 0, 0, 0)]: [{ w: 60, r: 10 }] },
     description: 'Collection of sets',
   })
-  @Column({ type: DataType.ARRAY(DataType.JSON), allowNull: false })
-  sets: { [key: string]: number }[];
+  @Column({ type: DataType.JSON, allowNull: false })
+  sets: { [key: string]: { [key: string]: number }[] };
 
-  @BelongsTo(() => UsersModel)
-  user: UsersModel;
-
-  @ForeignKey(() => UsersModel)
+  @ApiProperty({ example: '1', description: 'userId' })
   @Column({ type: DataType.INTEGER, allowNull: false })
   userId: number;
 

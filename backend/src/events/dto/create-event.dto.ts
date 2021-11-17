@@ -11,4 +11,10 @@ export class CreateEventDto implements EventInterface {
     description: 'Exercises array',
   })
   exercises: ExerciseModel[];
+
+  @ApiProperty({
+    example: `1`,
+    description: 'Schedule that the event belongs to',
+  })
+  scheduleId: number;
 }

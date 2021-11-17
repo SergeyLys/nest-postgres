@@ -12,10 +12,13 @@ export class EventsService {
   ) {}
 
   async createEvent(createEventDto: CreateEventDto, userId: number) {
-    const event = await this.eventsRepository.create({
-      ...createEventDto,
-      userId,
-    });
+    const event = await this.eventsRepository.create(
+      {
+        ...createEventDto,
+        userId,
+      },
+      { include: [ExerciseModel] },
+    );
     return event;
   }
 
@@ -29,6 +32,13 @@ export class EventsService {
   getEventsByOwner(ownerId: number) {
     return this.eventsRepository.findAll({
       where: { userId: ownerId },
+      include: [ExerciseModel],
+    });
+  }
+
+  getEventsById(eventId: number) {
+    return this.eventsRepository.findOne({
+      where: { id: eventId },
       include: [ExerciseModel],
     });
   }

@@ -24,10 +24,7 @@ export class ScheduleModel extends Model<ScheduleModel, ScheduleInterface> {
   })
   id: number;
 
-  @BelongsTo(() => UsersModel)
-  user: UsersModel;
-
-  @ForeignKey(() => UsersModel)
+  @ApiProperty({ example: '1', description: 'userId' })
   @Column({ type: DataType.INTEGER, allowNull: false })
   userId: number;
 

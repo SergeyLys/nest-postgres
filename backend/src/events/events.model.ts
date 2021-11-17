@@ -28,11 +28,9 @@ export class EventsModel extends Model<EventsModel, EventInterface> {
   @Column({ type: DataType.STRING, allowNull: false })
   day: string;
 
-  @ForeignKey(() => UsersModel)
+  @ApiProperty({ example: '1', description: 'userId' })
   @Column({ type: DataType.INTEGER, allowNull: false })
   userId: number;
-  @BelongsTo(() => UsersModel)
-  user: UsersModel;
 
   @ForeignKey(() => ScheduleModel)
   @Column({ type: DataType.INTEGER, allowNull: true })

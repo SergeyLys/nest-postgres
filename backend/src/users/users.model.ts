@@ -8,8 +8,6 @@ import {
 } from 'sequelize-typescript';
 import { UserInterface } from './interfaces/user.interface';
 import { ApiProperty } from '@nestjs/swagger';
-import { ExerciseModel } from '../exercise/exercise.model';
-import { EventsModel } from '../events/events.model';
 
 @Table({ tableName: 'users' })
 export class UsersModel extends Model<UsersModel, UserInterface> {
@@ -33,10 +31,4 @@ export class UsersModel extends Model<UsersModel, UserInterface> {
   @ApiProperty({ example: 'Name', description: 'Users name' })
   @Column({ type: DataType.STRING, allowNull: true })
   name: string;
-
-  @HasMany(() => EventsModel)
-  events: EventsModel[];
-
-  @HasMany(() => ExerciseModel)
-  exercises: ExerciseModel[];
 }

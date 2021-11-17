@@ -6,6 +6,7 @@ import { ScheduleModel } from './schedule.model';
 import { WEEKDAYS } from '../helpers/constants';
 import { EventsService } from '../events/events.service';
 import { EventsModel } from '../events/events.model';
+import { ExerciseModel } from '../exercise/exercise.model';
 
 @Injectable()
 export class ScheduleService {
@@ -16,22 +17,25 @@ export class ScheduleService {
   ) {}
 
   async create(createScheduleDto: CreateScheduleDto) {
+    const schedule = await this.scheduleRepository.create(
+      {
+        events: [],
+        userId: createScheduleDto.userId,
+      },
+      { include: [{ model: EventsModel, include: [ExerciseModel] }] },
+    );
     const events = await Promise.all(
       (createScheduleDto.weekdays || WEEKDAYS).map((day) =>
         this.eventsService.createEvent(
-          { day, exercises: [] },
+          { day, exercises: [], scheduleId: schedule.id },
           createScheduleDto.userId,
         ),
       ),
     );
-
-    return this.scheduleRepository.create(
-      {
-        events,
-        userId: createScheduleDto.userId,
-      },
-      { include: [EventsModel] },
-    );
+    await schedule.update({
+      events,
+    });
+    return schedule;
   }
 
   findAll() {
@@ -51,6 +55,16 @@ export class ScheduleService {
   }
 
   findByUser(userId: number) {
-    return this.scheduleRepository.findAll({ where: { userId } });
+    return this.scheduleRepository.findAll({
+      attributes: { exclude: ['updatedAt', 'createdAt'] },
+      where: { userId },
+      include: [
+        {
+          model: EventsModel,
+          attributes: { exclude: ['updatedAt', 'createdAt'] },
+          include: [ExerciseModel],
+        },
+      ],
+    });
   }
 }
