@@ -45,29 +45,6 @@ export class ExerciseController {
     @Body() updateExerciseDto: UpdateExerciseDto,
     @User('id') userId: number,
   ) {
-    // const currentDate = `${new Date().getFullYear()}-${
-    //   new Date().getMonth() + 1
-    // }-${new Date().getDate()}`;
-    // const foundItem = await this.exerciseService.findOne(id);
-    //
-    // if (foundItem) {
-    //   const today = new Date().getTime();
-    //   const currentWeekday = new Intl.DateTimeFormat('en-US', {
-    //     weekday: 'short',
-    //   }).format(new Date());
-    //   const isSameDay = currentWeekday === foundItem.event.day;
-    //   const isCreatedToday = new Date(foundItem.createdAt).getDate() === today;
-    //
-    //   if (isSameDay && !isCreatedToday) {
-    //     return this.exerciseService.create(
-    //       {
-    //         ...updateExerciseDto,
-    //         eventId: foundItem.eventId,
-    //       },
-    //       userId,
-    //     );
-    //   }
-    // }
     return this.exerciseService.update(+id, updateExerciseDto);
   }
 
